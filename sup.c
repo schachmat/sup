@@ -72,9 +72,9 @@ int main(int argc, char **argv) {
 				else if (!(cmd = getpath (argv[1])))
 					return die (1, "execv", "cannot find program");
 			} else cmd = rules[i].path;
-			if (lstat (cmd, &st) == -1)
-				return die (1, "lstat", "cannot stat program");
-			if (st.st_mode & 0222)
+			if (stat (cmd, &st) == -1)
+				return die (1, "stat", "cannot stat program");
+			if (st.st_mode & 0022)
 				return die (1, "stat", "cannot run writable binaries.");
 #endif
 			if (uid != SETUID && rules[i].uid != -1 && rules[i].uid != uid)
